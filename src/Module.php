@@ -5,16 +5,19 @@ namespace Bvarent\TwbBundleAdd;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
+use Zend\ModuleManager\Feature\InitProviderInterface;
+use Zend\ModuleManager\ModuleEvent;
+use Zend\ModuleManager\ModuleManagerInterface;
 
 class Module implements
-AutoloaderProviderInterface, ConfigProviderInterface, DependencyIndicatorInterface
+AutoloaderProviderInterface, ConfigProviderInterface, DependencyIndicatorInterface, InitProviderInterface
 {
-    
+
     /**
      * A human readable name for this module.
      */
     const MODULE_NAME = 'Bvarent TwbBundle additions';
-    
+
     /**
      * The key to use in the global ZF2 config to identify this module.
      */
@@ -56,6 +59,24 @@ AutoloaderProviderInterface, ConfigProviderInterface, DependencyIndicatorInterfa
         return array(
             'TwbBundle',
         );
+    }
+
+    public function init(ModuleManagerInterface $manager)
+    {
+        // Attach to the 'merge config' event.
+        $manager->getEventManager()->attach(ModuleEvent::EVENT_MERGE_CONFIG, array($this, 'onMergeConfig'));
+    }
+
+    public function onMergeConfig(ModuleEvent $e)
+    {
+        $configListener = $e->getConfigListener();
+        $config = $configListener->getMergedConfig(false);
+
+        // Unset the invokable formCollection view helper from TwbBundle.
+        unset($config['view_helpers']['invokables']['formCollection']);
+
+        // Pass the changed configuration back to the listener:
+        $configListener->setMergedConfig($config);
     }
 
 }
