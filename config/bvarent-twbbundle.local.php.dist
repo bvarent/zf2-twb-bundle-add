@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * Copy this file to your ZF2 autoload dir,
+ * fill in the options you want to override,
+ * remove the .dist extension.
+ */
+
+namespace Bvarent\TwbBundleAdd;
+
+return array(
+    Module::CONFIG_KEY => array(
+        // 'assets_path' => '/my_custom_assets_path'
+    )
+);

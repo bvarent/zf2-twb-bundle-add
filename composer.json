@@ -1,0 +1,22 @@
+{
+    "name": "bvarent/zf2-twb-bundle-add",
+    "description": "Additions to TwbBundle v2 for ZF2.",
+    "authors": [{
+        "name": "bvarent",
+        "email": "r.arents@bva-auctions.com"
+    }],
+    "keywords": [
+        "zf2",
+        "bootstrap"
+    ],
+    "type": "library",
+    "require": {
+        "php": "^5.5",
+        "neilime/zf2-twb-bundle": "^2.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bvarent\\TwbBundleAdd\\": "src/"
+        }
+    }
+}
